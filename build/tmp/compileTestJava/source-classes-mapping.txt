@@ -1,6 +1,0 @@
-com/chdlsp/datapractice/DataPracticeApplicationTests.java
- com.chdlsp.datapractice.DataPracticeApplicationTests
-com/chdlsp/datapractice/application/TransactionDemoControllerTests.java
- com.chdlsp.datapractice.application.TransactionDemoControllerTests
-com/chdlsp/datapractice/service/TransactionDemoServiceTests.java
- com.chdlsp.datapractice.service.TransactionDemoServiceTests
