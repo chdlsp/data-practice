@@ -32,10 +32,10 @@ public class TransactionDemoRunner implements ApplicationRunner {
         StopWatch stopWatchForRest = new StopWatch();
         stopWatchForRest.start();
 
-        String forObjectSuccess = restTemplate.getForObject("http://localhost:8080/users/success", String.class);
+        String forObjectSuccess = restTemplate.getForObject("http://localhost:8080/web/success", String.class);
         log.info(forObjectSuccess);
 
-        String forObjectFailure = restTemplate.getForObject("http://localhost:8080/users/failure", String.class);
+        String forObjectFailure = restTemplate.getForObject("http://localhost:8080/web/failure", String.class);
         log.info(forObjectFailure);
 
         stopWatchForRest.stop();
@@ -46,7 +46,9 @@ public class TransactionDemoRunner implements ApplicationRunner {
         log.info("WebClient Test ... ===========================");
 
         // WebClient 은 비동기 방식으로 수행 됨 (NonBlocking IO 기반)
-        WebClient webClient = webClientBuilder.build();
+        WebClient webClient = webClientBuilder
+                .baseUrl("http://localhost:8080/web")
+                .build();
 
         StopWatch stopWatchForWeb = new StopWatch();
         stopWatchForWeb.start();
@@ -54,7 +56,7 @@ public class TransactionDemoRunner implements ApplicationRunner {
         // 아래 코드는 실행 해도 전혀 아무일도 실행되지 않음...
         // Mono, Flux 등에 대해 학습이 필요
         // Mono => stream 을 subscribe 하기 전 까지는 물이 흐르지 않는다.
-        Mono<String> webMonoSuccess = webClient.get().uri("http://localhost:8080/users/success")
+        Mono<String> webMonoSuccess = webClient.get().uri("/success")
                 .retrieve()
                 .bodyToMono(String.class);
 
@@ -68,7 +70,7 @@ public class TransactionDemoRunner implements ApplicationRunner {
             log.info(stopWatchForRest.prettyPrint());
         });
 
-        Mono<String> webMonoFailure = webClient.get().uri("http://localhost:8080/users/failure")
+        Mono<String> webMonoFailure = webClient.get().uri("/failure")
                 .retrieve()
                 .bodyToMono(String.class);
 
