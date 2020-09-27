@@ -2,10 +2,8 @@ package com.chdlsp.datapractice.service;
 
 import com.chdlsp.datapractice.domain.entity.UserEntity;
 import com.chdlsp.datapractice.domain.interfaces.request.CreateUserInfoRequestVO;
-import com.chdlsp.datapractice.domain.interfaces.response.CreateUserInfoResponseVO;
 import com.chdlsp.datapractice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,5 +36,38 @@ public class TransactionDemoService {
                 .build();
 
         return userRepository.save(saveInfo);
+    }
+
+    @Transactional(readOnly = true)
+    public UserEntity getUserInfoById(Long id) {
+
+        Optional<UserEntity> userInfoById = userRepository.findById(id);
+
+        if(userInfoById.isPresent()) {
+            return userInfoById.get();
+        } else {
+            // TODO: 적절한 Exception 처리 필요
+            throw new IllegalArgumentException("요청받은 id가 존재하지 않습니다." + id);
+        }
+    }
+
+    // TODO: 구현 필요
+    public UserEntity putUserInfo(CreateUserInfoRequestVO createUserInfoRequestVO) {
+        return null;
+    }
+
+    public int deleteUserInfoById(Long id) {
+
+        UserEntity delUserInfo = UserEntity.builder()
+                .id(id)
+                .build();
+
+        try {
+            userRepository.delete(delUserInfo);
+            return 1;
+        } catch(Exception e) {
+            // TODO: 적절한 Exception 처리 필요
+            return 0;
+        }
     }
 }

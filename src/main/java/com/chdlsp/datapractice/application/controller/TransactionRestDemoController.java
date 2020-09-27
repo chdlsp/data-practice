@@ -16,17 +16,56 @@ public class TransactionRestDemoController {
     @Autowired
     private TransactionDemoService transactionDemoService;
 
-    @PostMapping("/success")
-    public ResponseEntity saveNewUserInfoWithDefault(@RequestBody CreateUserInfoRequestVO createUserInfoRequestVO) {
+    @PostMapping("/")
+    public ResponseEntity saveNewUserInfo(@RequestBody CreateUserInfoRequestVO createUserInfoRequestVO) {
 
         log.info("createUserInfoRequestVO : " + createUserInfoRequestVO.toString());
 
         UserEntity userEntity = transactionDemoService.saveNewUserInfoWithDefault(createUserInfoRequestVO);
 
-        log.info("saveNewUserInfoWithDefault : " + userEntity.toString());
+        log.info("saveNewUserInfoWithDefault : " + userEntity);
 
         return ResponseEntity.ok(userEntity);
     }
+
+    @GetMapping("/")
+    public ResponseEntity getUserInfo(@RequestParam Long id) throws Exception {
+
+        log.info("getUserInfo Id : " + id);
+
+        UserEntity userEntity = transactionDemoService.getUserInfoById(id);
+
+        log.info("getUserInfo : " + userEntity);
+
+        return ResponseEntity.ok(userEntity);
+    }
+
+
+    @PutMapping("/")
+    public ResponseEntity putUserInfo(@RequestBody CreateUserInfoRequestVO createUserInfoRequestVO) {
+
+        log.info("putUserInfo : " + createUserInfoRequestVO.toString());
+
+        UserEntity userEntity = transactionDemoService.putUserInfo(createUserInfoRequestVO);
+
+        log.info("putUserInfo : " + userEntity.toString());
+
+        return ResponseEntity.ok(userEntity);
+    }
+
+
+    @DeleteMapping("/")
+    public ResponseEntity deleteUserInfo(@RequestParam Long id) {
+
+        log.info("getUserInfo Id : " + id);
+
+        int delResult = transactionDemoService.deleteUserInfoById(id);
+
+        log.info("deleteUserInfo : " + delResult);
+
+        return ResponseEntity.ok(delResult);
+    }
+
 
     @PostMapping("/failure")
     public ResponseEntity saveNewUserInfoWithReadOnly(@RequestBody CreateUserInfoRequestVO createUserInfoRequestVO) {

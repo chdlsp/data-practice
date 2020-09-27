@@ -45,7 +45,7 @@ class TransactionDemoControllerTests {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/success")
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userEntity.toString())))

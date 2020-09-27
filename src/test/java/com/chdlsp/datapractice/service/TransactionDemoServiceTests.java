@@ -41,7 +41,7 @@ class TransactionDemoServiceTests {
                 .build();
     }
 
-
+    @Test
     void saveSuccessWithTransactionalDefault() {
 
         // given
@@ -54,11 +54,12 @@ class TransactionDemoServiceTests {
         // then
         assertThat(userEntity).isNotNull();
         assertThat(userEntity.getEmail()).isEqualTo(createUserInfoRequestVO.getEmail());
-        assertThat(userEntity.getEmail()).isEqualTo(createUserInfoRequestVO.getEmail());
+        assertThat(userEntity.getPassword()).isEqualTo(createUserInfoRequestVO.getPassword());
 
     }
 
     // TODO: 이건 어떻게 해야지 테스트가 가능한거지...? save 되면 안되는데 의도대로 테스트가 안됨
+    // H2 를 이용해서 테스트가 불가능하여 다른 방법으로 찾을 필요가 있음.
     @Test
     void saveFailureWithTransactionalReadonly() {
 
@@ -72,7 +73,7 @@ class TransactionDemoServiceTests {
         //then
         assertThat(userEntity).isNotNull();
         assertThat(userEntity.getEmail()).isEqualTo(createUserInfoRequestVO.getEmail());
-        assertThat(userEntity.getEmail()).isEqualTo(createUserInfoRequestVO.getEmail());
+        assertThat(userEntity.getPassword()).isEqualTo(createUserInfoRequestVO.getPassword());
 
     }
 }
