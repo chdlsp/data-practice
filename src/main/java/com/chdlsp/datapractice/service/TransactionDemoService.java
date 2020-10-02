@@ -5,12 +5,19 @@ import com.chdlsp.datapractice.domain.interfaces.request.CreateUserInfoRequestVO
 import com.chdlsp.datapractice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional // 4가지 기능 제공 : propagation, isolation, rollback, readOnly
+/*
+ * propagation : REQUIRED(default), REQUIRES_NEW
+ * isolation : default 가 DBMS 마다 다름 => 대부분은 commit 된 것만 처리 가능함
+ * rollback : 특정 exception 이 발생할 때 rollback 처리
+ * readOnly : 읽기전용 여부 (default : false)
+ * */
 public class TransactionDemoService {
 
     @Autowired
@@ -56,6 +63,7 @@ public class TransactionDemoService {
         return null;
     }
 
+    @Transactional
     public int deleteUserInfoById(Long id) {
 
         UserEntity delUserInfo = UserEntity.builder()
