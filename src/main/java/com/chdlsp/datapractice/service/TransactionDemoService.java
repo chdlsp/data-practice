@@ -46,15 +46,15 @@ public class TransactionDemoService {
     }
 
     @Transactional(readOnly = true)
-    public UserEntity getUserInfoById(Long id) {
+    public UserEntity getUserInfoById(String email) {
 
-        Optional<UserEntity> userInfoById = userRepository.findById(id);
+        Optional<UserEntity> userInfoById = userRepository.findById(email);
 
         if(userInfoById.isPresent()) {
             return userInfoById.get();
         } else {
             // TODO: 적절한 Exception 처리 필요
-            throw new IllegalArgumentException("요청받은 id가 존재하지 않습니다." + id);
+            throw new IllegalArgumentException("요청받은 email 존재하지 않습니다." + email);
         }
     }
 
@@ -64,10 +64,10 @@ public class TransactionDemoService {
     }
 
     @Transactional
-    public int deleteUserInfoById(Long id) {
+    public int deleteUserInfoById(String email) {
 
         UserEntity delUserInfo = UserEntity.builder()
-                .id(id)
+                .email(email)
                 .build();
 
         try {

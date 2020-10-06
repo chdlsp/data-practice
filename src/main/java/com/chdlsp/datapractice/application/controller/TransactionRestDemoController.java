@@ -58,11 +58,11 @@ public class TransactionRestDemoController {
     // localhost:8080?id=1&nickName=test
     // localhost:8080?id=1 (호출 불가, nickName 필요)
     @GetMapping("")
-    public ResponseEntity getUserInfo(@RequestParam Long id) throws Exception {
+    public ResponseEntity getUserInfo(@RequestParam String email) throws Exception {
 
-        log.info("getUserInfo Id : " + id);
+        log.info("getUserInfo email : " + email);
 
-        UserEntity userEntity = transactionDemoService.getUserInfoById(id);
+        UserEntity userEntity = transactionDemoService.getUserInfoById(email);
 
         log.info("getUserInfo : " + userEntity);
 
@@ -84,11 +84,11 @@ public class TransactionRestDemoController {
 
 
     @DeleteMapping("/")
-    public ResponseEntity deleteUserInfo(@RequestParam Long id) {
+    public ResponseEntity deleteUserInfo(@RequestParam String email) {
 
-        log.info("getUserInfo Id : " + id);
+        log.info("getUserInfo email : " + email);
 
-        int delResult = transactionDemoService.deleteUserInfoById(id);
+        int delResult = transactionDemoService.deleteUserInfoById(email);
 
         log.info("deleteUserInfo : " + delResult);
 
