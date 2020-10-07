@@ -1,20 +1,15 @@
 package com.chdlsp.datapractice.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
@@ -23,22 +18,25 @@ import java.util.List;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Accessors(chain = true)
-public class UserEntity {
+public class ContentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    private String email;
+    String roadName; // 도로명
+    String mainBuildingNo; // 건물본번
+    String zoneNo; // zone 번호
+    String reviewSequence; //리뷰 일련번호
 
-    private String password;
-    private String nickname;
-    private boolean emailExpired; // 탈퇴여부
-    private int emailLocked; // 5회잠금 카운트
-    private String ip; // 가입 시 client ip
+    String reviewMainContent; // 리뷰 개요
+    String reviewGoodContent; // 장점 리뷰 내용
+    String reviewBadContent; // 단점 리뷰 내용
 
-    private LocalDateTime lassPasswordChanged; // 패스워드 변경 시점
-    private String loginType; // 로그인 타입
+    double trafficPoint; // 교통접근성 점수
+    double conveniencePoint; // 편의성 점수
+    double noisePoint; // 소음 점수
+    double safetyPoint; // 치안 점수
 
     @CreatedBy
     private String createdBy;
@@ -52,7 +50,7 @@ public class UserEntity {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-    // UserEntity 1 : N ContentEntity
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
-    private List<ContentEntity> contentEntityList;
+    // OrderDetail N : 1 OrderGroup
+    @ManyToOne
+    private UserEntity userEntity;
 }
